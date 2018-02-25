@@ -1,0 +1,13 @@
+{
+	"primitives": [{
+			"type": "sphere",
+			"position": [5, 0, -20],
+			"radius": 4
+		},
+		{
+			"type": "sphere",
+			"position": [-2, 0, -20],
+			"radius": 2
+		}
+	]
+}

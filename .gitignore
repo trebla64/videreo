@@ -1,0 +1,8 @@
+*.opendb
+*.opensdf
+*.sdf
+*.swp
+*~
+.vs/
+Debug/
+x64/
