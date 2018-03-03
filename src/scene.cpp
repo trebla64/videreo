@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "scene.h"
 #include "sphere.h"
+#include "mesh.h"
 
 Scene::Scene(RTCDevice device)
 {
@@ -116,6 +117,21 @@ bool Scene::LoadFromFile(const char *filename)
 				this->primitives.push_back(std::move(primitive));
 			}
 			else if (type == "mesh") {
+				assert(item.HasMember("source"));
+				assert(item["source"].IsString());
+
+				auto mesh = new Mesh(item["source"].GetString());
+				// TODO: Use make_unique here
+				std::unique_ptr<Primitive> primitive = std::unique_ptr<Mesh>(mesh);
+
+				RTCGeometry geom = rtcNewGeometry(_device, RTC_GEOMETRY_TYPE_USER);
+				// TODO: Set geometry data here
+				rtcCommitGeometry(geom);
+
+				unsigned geomID = AttachGeometry(geom);
+				primitive->SetGeomID(geomID);
+
+				this->primitives.push_back(std::move(primitive));
 			}
 			else {
 				// Invalid primitive type

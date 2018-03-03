@@ -2,7 +2,8 @@
 
 enum PrimitiveType {
 	PT_NULL = 0,
-	PT_SPHERE
+	PT_SPHERE,
+	PT_MESH
 };
 
 class Primitive
