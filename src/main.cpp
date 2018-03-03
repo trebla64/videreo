@@ -161,6 +161,15 @@ static void TestLoadModel()
 	ply.parse_header(ss);
 
 	for (auto c : ply.get_comments()) std::cout << "Comment: " << c << std::endl;
+
+	for (auto e : ply.get_elements())
+	{
+		std::cout << "element - " << e.name << " (" << e.size << ")" << std::endl;
+		for (auto p : e.properties)
+		{
+			std::cout << "\tproperty - " << p.name << " (" << tinyply::PropertyTable[p.propertyType].str << ")" << std::endl;
+		}
+	}
 }
 
 int main(int argc, char *argv[])
