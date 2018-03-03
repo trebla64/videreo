@@ -8,6 +8,10 @@
 			"type": "sphere",
 			"position": [-2, 0, -20],
 			"radius": 2
+		},
+		{
+			"type": "mesh",
+			"source": "test.ply"
 		}
 	]
 }
