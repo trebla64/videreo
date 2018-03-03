@@ -162,6 +162,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\thirdparty\tinyply\tinyply.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\model_loader.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\sphere.h" />
     <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\thirdparty\tinyply\tinyply.h" />
     <ClInclude Include="src\vec2.h" />
     <ClInclude Include="src\vec3.h" />
   </ItemGroup>

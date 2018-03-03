@@ -3,6 +3,7 @@
 #include "vec2.h"
 #include "sphere.h"
 #include "scene.h"
+#include "ply_loader.h"
 
 #pragma comment(lib, "embree3.lib")
 
@@ -145,8 +146,16 @@ static void EmbreeErrorFunction(void* userPtr, enum RTCError code, const char* s
 	fprintf(flog, "[Embree] %s\n", str);
 }
 
+static void TestLoadModel()
+{
+	PLYLoader loader;
+	loader.LoadFromFile("D:\\Repos\\pbrt-v3-scenes\\dragon\\geometry\\dragon_remeshed.ply");
+}
+
 int main(int argc, char *argv[])
 {
+	TestLoadModel();
+
 	// Parse arguments
 	if (argc != 2) {
 		printf("Usage: %s <scene file>\n", argv[0]);
