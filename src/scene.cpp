@@ -115,6 +115,8 @@ bool Scene::LoadFromFile(const char *filename)
 				// https://stackoverflow.com/questions/3283778/why-can-i-not-push-back-a-unique-ptr-into-a-vector
 				this->primitives.push_back(std::move(primitive));
 			}
+			else if (type == "mesh") {
+			}
 			else {
 				// Invalid primitive type
 				assert(0 && "Invalid primitive type in scene file");
