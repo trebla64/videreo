@@ -22,6 +22,7 @@
     <ProjectGuid>{D0E4A535-CB57-49FF-A01E-3A3E84BA2E3E}</ProjectGuid>
     <RootNamespace>tracer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>videreo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
