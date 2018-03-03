@@ -4,6 +4,7 @@
 #include "sphere.h"
 #include "scene.h"
 #include "ply_loader.h"
+#include "tinyply.h"
 
 #pragma comment(lib, "embree3.lib")
 
@@ -148,8 +149,18 @@ static void EmbreeErrorFunction(void* userPtr, enum RTCError code, const char* s
 
 static void TestLoadModel()
 {
-	PLYLoader loader;
-	loader.LoadFromFile("D:\\Repos\\pbrt-v3-scenes\\dragon\\geometry\\dragon_remeshed.ply");
+	std::cout << "TestLoadModel" << std::endl;
+
+	tinyply::PlyFile ply;
+	std::ifstream ss("D:\\Repos\\pbrt-v3-scenes\\dragon\\geometry\\dragon_remeshed.ply", std::ios::binary);
+	if (ss.fail())
+	{
+		std::cout << "Failed loading file!" << std::endl;
+	}
+
+	ply.parse_header(ss);
+
+	for (auto c : ply.get_comments()) std::cout << "Comment: " << c << std::endl;
 }
 
 int main(int argc, char *argv[])
