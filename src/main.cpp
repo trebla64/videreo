@@ -130,16 +130,6 @@ static vec2 random2f()
 	return res;
 }
 
-#if 0
-struct SphereObject {
-	SphereObject()	{}
-
-	vec3 pos;
-	float radius;
-	float radius2;
-};
-#endif
-
 static void EmbreeErrorFunction(void* userPtr, enum RTCError code, const char* str)
 {
 	FILE *flog = (FILE *)userPtr;
@@ -196,28 +186,7 @@ int main(int argc, char *argv[])
 	Scene newScene(dev);
 	newScene.LoadFromFile(scene_file);
 
-#if 0
-	Sphere obj(vec3(0.0f, 0.0f, -20.0f), 4.0f);
-
-	RTCGeometry geom = rtcNewGeometry(dev, RTC_GEOMETRY_TYPE_USER);
-	rtcSetGeometryBuildQuality(geom, RTC_BUILD_QUALITY_MEDIUM);
-	rtcSetGeometryUserPrimitiveCount(geom, 1);
-	rtcSetGeometryTimeStepCount(geom, 1);
-	rtcSetGeometryUserData(geom, &obj);
-	rtcSetGeometryBoundsFunction(geom, SphereObjectBounds, nullptr);
-	rtcSetGeometryIntersectFunction(geom, SphereObjectIntersect);
-	rtcSetGeometryOccludedFunction(geom, SphereObjectOccluded);
-	rtcCommitGeometry(geom);
-	
-	unsigned geomID = newScene.AttachGeometry(geom);
-#endif
-
 	newScene.Commit();
-
-//	float angle = tanf(M_PI * 0.5f * kFOV / 180.0f);
-//	float invWidth = 1.0f / float(SCREEN_WIDTH);
-//	float invHeight = 1.0f / float(SCREEN_HEIGHT);
-//	float aspectratio = float(SCREEN_WIDTH) / float(SCREEN_HEIGHT);
 
 	vec2 resolution((float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
 
@@ -225,7 +194,6 @@ int main(int argc, char *argv[])
 
 	uint8_t *pbuf = _buffer;
 	for (unsigned y = 0; y < SCREEN_HEIGHT; y++) {
-//		float yy = (1.0f - 2.0f * ((float(y) + 0.5f) * invHeight)) * angle;
 		for (unsigned x = 0; x < SCREEN_WIDTH; x++) {
 			vec2 pixel((float)x, (float)y);
 
@@ -264,8 +232,6 @@ int main(int argc, char *argv[])
 				if (prim) {
 					col += vec3(1.0f, 1.0f, 1.0f);
 				}
-				//if (rayhit.hit.geomID == geomID)
-					//col += vec3(1.0f, 1.0f, 1.0f);
 			}
 			col /= float(NUM_SAMPLES);
 
@@ -276,34 +242,6 @@ int main(int argc, char *argv[])
 			*pbuf++ = (uint8_t)col.x;
 			*pbuf++ = (uint8_t)col.y;
 			*pbuf++ = (uint8_t)col.z;
-
-			// move objects
-//			worldMoveObjects( frameTime );
-
-			// get camera position, and right/up/front axis
-//			vec3 (ro, uu, vv, ww) = worldMoveCamera( frameTime );
-
-			// create ray
-//			vec3 rd = normalize( p.x*uu + p.y*vv + 2.5*ww );
-
-			// calc pixel color
-//			vec3 col = rendererCalculateColor( ro, rd );
-
-			// apply gamma correction
-//			col = pow( col, 0.45 );
-
-//			return col;
-
-//			float xx = (2.0f * ((float(x) + 0.5f) * invWidth) - 1.0f) * angle * aspectratio;
-//			vec3 raydir(xx, yy, -1.0f);
-//			raydir.normalize();
-//			vec3 col = trace(vec3(0.0f, 0.0f, 0.0f), raydir, Sphere(vec3(0.0f, 0.0f, -20.0f), 4.0f));
-//			col.x *= 255.0f;
-//			col.y *= 255.0f;
-//			col.z *= 255.0f;
-//			*p++ = col.x;
-//			*p++ = col.y;
-//			*p++ = col.z;
 		}
 	}
 
