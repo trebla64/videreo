@@ -4,7 +4,6 @@
 #include "sphere.h"
 #include "scene.h"
 #include "ply_loader.h"
-#include "tinyply.h"
 
 #pragma comment(lib, "embree3.lib")
 
