@@ -3,7 +3,6 @@
 #include "vec2.h"
 #include "sphere.h"
 #include "scene.h"
-#include "ply_loader.h"
 
 #pragma comment(lib, "embree3.lib")
 

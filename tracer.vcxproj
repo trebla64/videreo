@@ -153,7 +153,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\ply_loader.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\sphere.cpp" />
     <ClCompile Include="src\stdafx.cpp">
@@ -165,8 +164,6 @@
     <ClCompile Include="src\thirdparty\tinyply\tinyply.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\model_loader.h" />
-    <ClInclude Include="src\ply_loader.h" />
     <ClInclude Include="src\primitive.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\sphere.h" />
