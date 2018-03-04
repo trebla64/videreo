@@ -128,6 +128,28 @@ bool Scene::LoadFromFile(const char *filename)
 				// TODO: Set geometry data here
 				rtcCommitGeometry(geom);
 
+#if 0
+				/* create a triangulated plane with 2 triangles and 4 vertices */
+				RTCGeometry mesh = rtcNewGeometry(g_device, RTC_GEOMETRY_TYPE_TRIANGLE);
+
+				/* set vertices */
+				Vertex* vertices = (Vertex*)rtcSetNewGeometryBuffer(mesh, RTC_BUFFER_TYPE_VERTEX, 0, RTC_FORMAT_FLOAT3, sizeof(Vertex), 4);
+				vertices[0].x = -10; vertices[0].y = -2; vertices[0].z = -10;
+				vertices[1].x = -10; vertices[1].y = -2; vertices[1].z = +10;
+				vertices[2].x = +10; vertices[2].y = -2; vertices[2].z = -10;
+				vertices[3].x = +10; vertices[3].y = -2; vertices[3].z = +10;
+
+				/* set triangles */
+				Triangle* triangles = (Triangle*)rtcSetNewGeometryBuffer(mesh, RTC_BUFFER_TYPE_INDEX, 0, RTC_FORMAT_UINT3, sizeof(Triangle), 2);
+				triangles[0].v0 = 0; triangles[0].v1 = 1; triangles[0].v2 = 2;
+				triangles[1].v0 = 1; triangles[1].v1 = 3; triangles[1].v2 = 2;
+
+				rtcCommitGeometry(mesh);
+				unsigned int geomID = rtcAttachGeometry(scene_i, mesh);
+				rtcReleaseGeometry(mesh);
+				return geomID;
+#endif
+
 				unsigned geomID = AttachGeometry(geom);
 				primitive->SetGeomID(geomID);
 
