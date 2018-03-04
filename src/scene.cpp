@@ -137,16 +137,23 @@ bool Scene::LoadFromFile(const char *filename)
 				tinyply::PlyFile ply;
 				ply.parse_header(ss);
 				
-				std::shared_ptr<tinyply::PlyData> vertices;
+				std::shared_ptr<tinyply::PlyData> vertices, faces;
 				vertices = ply.request_properties_from_element("vertex", { "x", "y", "z" });
 				size_t vertex_count = 0;
 				if (vertices)
 					vertex_count = vertices->count;
 
+				faces = ply.request_properties_from_element("face", { "vertex_indices" });
+				size_t face_count = 0;
+				if (faces)
+					face_count = faces->count;
+
 				// TODO: Use make_unique here
 				std::unique_ptr<Primitive> primitive = std::unique_ptr<Mesh>(mesh);
 
 				RTCGeometry geom = rtcNewGeometry(_device, RTC_GEOMETRY_TYPE_TRIANGLE);
+
+				ply.read(ss);
 				
 				struct Vertex {
 					float x; float y; float z;
@@ -154,6 +161,10 @@ bool Scene::LoadFromFile(const char *filename)
 				const size_t numVerticesBytes = vertices->buffer.size_bytes();
 				Vertex* dst_vertices = (Vertex*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_VERTEX, 0, RTC_FORMAT_FLOAT3, sizeof(Vertex), vertex_count);
 				std::memcpy(dst_vertices, vertices->buffer.get(), numVerticesBytes);
+
+				const size_t numFacesBytes = faces->buffer.size_bytes();
+				const size_t bytesPerFace = numFacesBytes / face_count;
+				//Triangle* triangles = (Triangle*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_INDEX, 0, RTC_FORMAT_UINT3, sizeof(Triangle), 2);
 
 				rtcCommitGeometry(geom);
 
