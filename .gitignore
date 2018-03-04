@@ -1,7 +1,10 @@
+*.log
 *.opendb
 *.opensdf
+*.ppm
 *.sdf
 *.swp
+*.vcxproj.user
 *~
 .vs/
 Debug/

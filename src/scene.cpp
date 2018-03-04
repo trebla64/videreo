@@ -124,12 +124,37 @@ bool Scene::LoadFromFile(const char *filename)
 				// Try loading what is set as a source as PLY model
 
 				auto mesh = new Mesh(item["source"].GetString());
-				mesh->Load();
+
+				// TODO: Use mesh loading code here instead of assuming PLY file by default
+				//mesh->Load();
+
+				std::ifstream ss(item["source"].GetString(), std::ios::binary);
+				if (ss.fail())
+				{
+					std::cout << "Failed loading file!" << std::endl;
+				}
+
+				tinyply::PlyFile ply;
+				ply.parse_header(ss);
+				
+				std::shared_ptr<tinyply::PlyData> vertices;
+				vertices = ply.request_properties_from_element("vertex", { "x", "y", "z" });
+				size_t vertex_count = 0;
+				if (vertices)
+					vertex_count = vertices->count;
+
 				// TODO: Use make_unique here
 				std::unique_ptr<Primitive> primitive = std::unique_ptr<Mesh>(mesh);
 
-				RTCGeometry geom = rtcNewGeometry(_device, RTC_GEOMETRY_TYPE_USER);
-				// TODO: Set geometry data here
+				RTCGeometry geom = rtcNewGeometry(_device, RTC_GEOMETRY_TYPE_TRIANGLE);
+				
+				struct Vertex {
+					float x; float y; float z;
+				};
+				const size_t numVerticesBytes = vertices->buffer.size_bytes();
+				Vertex* dst_vertices = (Vertex*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_VERTEX, 0, RTC_FORMAT_FLOAT3, sizeof(Vertex), vertex_count);
+				std::memcpy(dst_vertices, vertices->buffer.get(), numVerticesBytes);
+
 				rtcCommitGeometry(geom);
 
 #if 0
