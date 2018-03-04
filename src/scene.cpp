@@ -159,12 +159,16 @@ bool Scene::LoadFromFile(const char *filename)
 					float x; float y; float z;
 				};
 				const size_t numVerticesBytes = vertices->buffer.size_bytes();
-				Vertex* dst_vertices = (Vertex*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_VERTEX, 0, RTC_FORMAT_FLOAT3, sizeof(Vertex), vertex_count);
+				Vertex *dst_vertices = (Vertex*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_VERTEX, 0, RTC_FORMAT_FLOAT3, sizeof(Vertex), vertex_count);
 				std::memcpy(dst_vertices, vertices->buffer.get(), numVerticesBytes);
 
 				const size_t numFacesBytes = faces->buffer.size_bytes();
 				const size_t bytesPerFace = numFacesBytes / face_count;
-				//Triangle* triangles = (Triangle*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_INDEX, 0, RTC_FORMAT_UINT3, sizeof(Triangle), 2);
+				struct Triangle {
+					uint32_t i0; uint32_t i1; uint32_t i2;
+				};
+				Triangle *dst_faces = (Triangle*)rtcSetNewGeometryBuffer(geom, RTC_BUFFER_TYPE_INDEX, 0, RTC_FORMAT_UINT3, sizeof(Triangle), face_count);
+				std::memcpy(dst_faces, faces->buffer.get(), numFacesBytes);
 
 				rtcCommitGeometry(geom);
 

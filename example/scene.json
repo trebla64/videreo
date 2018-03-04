@@ -11,7 +11,7 @@
 		},
 		{
 			"type": "mesh",
-			"source": "D:\\Repos\\pbrt-v3-scenes\\dragon\\geometry\\dragon_remeshed.ply"
+			"source": "D:\\Repos\\pbrt-v3-scenes\\bunny-fur\\geometry\\bunny.ply"
 		}
 	]
 }
