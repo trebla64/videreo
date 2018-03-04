@@ -111,6 +111,7 @@ bool Scene::LoadFromFile(const char *filename)
 
 				// Attach geometry to Embree scene and save geomID
 				unsigned geomID = AttachGeometry(geom);
+				rtcReleaseGeometry(geom);
 				primitive->SetGeomID(geomID);
 
 				// https://stackoverflow.com/questions/3283778/why-can-i-not-push-back-a-unique-ptr-into-a-vector
@@ -154,6 +155,7 @@ bool Scene::LoadFromFile(const char *filename)
 #endif
 
 				unsigned geomID = AttachGeometry(geom);
+				rtcReleaseGeometry(geom);
 				primitive->SetGeomID(geomID);
 
 				this->primitives.push_back(std::move(primitive));
