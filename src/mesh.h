@@ -8,6 +8,8 @@ public:
 	Mesh() = delete;
 	Mesh(const std::string &source_) : source(source_) {}
 
+	bool Load();	// Attemps to load the mesh from the source file
+
 public:
 	virtual PrimitiveType GetType() const { return PT_MESH; }
 	virtual unsigned      GetGeomID() const { return geomID; }	// For Embree

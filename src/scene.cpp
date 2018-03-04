@@ -120,7 +120,10 @@ bool Scene::LoadFromFile(const char *filename)
 				assert(item.HasMember("source"));
 				assert(item["source"].IsString());
 
+				// Try loading what is set as a source as PLY model
+
 				auto mesh = new Mesh(item["source"].GetString());
+				mesh->Load();
 				// TODO: Use make_unique here
 				std::unique_ptr<Primitive> primitive = std::unique_ptr<Mesh>(mesh);
 
