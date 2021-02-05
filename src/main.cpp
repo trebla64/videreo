@@ -116,6 +116,29 @@ vec3 calcPixelColor( in vec2 pixel, in vec2 resolution, in float frameTime )
 
     return col;
 }
+
+//Camera code
+mat3 setCamera(in vec3 ro, in vec3 rt, in float cr)
+{
+	vec3 cw = normalize(rt - ro);
+	vec3 cp = vec3(sin(cr), cos(cr), 0.0);
+	vec3 cu = normalize(cross(cw, cp));
+	vec3 cv = normalize(cross(cu, cw));
+	return mat3(cu, cv, -cw);
+}
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord)
+{
+	float sa = hash(dot(fragCoord, vec2(12.9898, 78.233)) + 1113.1 * float(iFrame));
+
+	vec2 of = -0.5 + vec2(hash(sa + 13.271), hash(sa + 63.216));
+	vec2 p = (-iResolution.xy + 2.0 * (fragCoord + of)) / iResolution.y;
+
+	vec3 ro = vec3(0.0, 0.0, 0.0);
+	vec3 ta = vec3(1.5, 0.7, 1.5);
+
+	mat3  ca = setCamera(ro, ta, 0.0);
+	vec3  rd = normalize(ca * vec3(p, -1.3));
 #endif
 
 static vec2 random2f()
